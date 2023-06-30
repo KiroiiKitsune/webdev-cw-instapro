@@ -1,6 +1,7 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
+import { getUpdateLikes } from "../helpers.js";
 
 export function renderUserPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
@@ -11,7 +12,7 @@ export function renderUserPostsPageComponent({ appEl }) {
    * можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
    */
 // создали разметку списка постов из Api
-  const postsHtml = posts.map((item) => {
+  const postsHtml = posts.map((item, index) => {
 
      return `<li class="post">
             <div class="post-header" data-user-id="${item.user.id}">
@@ -23,8 +24,7 @@ export function renderUserPostsPageComponent({ appEl }) {
               <img class="post-image" src="${item.imageUrl}">
             </div>
             <div class="post-likes">
-              <button data-post-id="${item.id}" class="like-button">
-                <img src="./assets/images/like-active.svg">
+            <button data-post-id="${item.id}" data-index= '${index}' class="like-button" ${ item.isLiked ? '<img src="./assets/images/like-active.svg">' : '<img src="./assets/images/like-not-active.svg">'}    
               </button>
               <p class="post-likes-text">
                 Нравится: <strong>${item.likes.length}</strong>
@@ -63,4 +63,5 @@ export function renderUserPostsPageComponent({ appEl }) {
       });
     });
   }
+  getUpdateLikes(posts)
 }

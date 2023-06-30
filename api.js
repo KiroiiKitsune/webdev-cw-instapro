@@ -109,3 +109,23 @@ export function uploadImage({ file }) {
     return response.json();
   });
 }
+
+export function activeUserLike ({likeId, token, activeLike }) {
+  return fetch((!activeLike ? postsHost + '/' + likeId + '/like' : postsHost + '/' + likeId + '/dislike'), {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) => {
+    if (response.status === 401) {
+      throw new Error("Нет авторизации");
+    }
+
+    return response.json();
+  })
+  .then((data) => {
+    return data.post;
+  });
+}
+
