@@ -73,7 +73,7 @@ export const goToPage = (newPage, data) => {
       page = USER_POSTS_PAGE;
       renderApp();
 
-      return userPosts({userId: data.userId ,token: getToken() })
+      return userPosts({userId: data.userId, token: getToken() })
       .then((newPosts) => {
         page = USER_POSTS_PAGE;
         posts = newPosts;
@@ -130,6 +130,7 @@ export const renderApp = () => {
           .then((data) => {
             goToPage(POSTS_PAGE);
           })
+          
       },
     });
   }
