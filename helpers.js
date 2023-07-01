@@ -36,9 +36,9 @@ export function getUpdateLikes (arr) {
           arr[index] = newPost;
           renderApp();
         })
-        // .catch((error) => {
-        //   console.error(error);
-        // });
+        .catch((error) => {
+          console.error(error);
+        });
       } else {console.log('автаризуйтесь');}
     })
   }

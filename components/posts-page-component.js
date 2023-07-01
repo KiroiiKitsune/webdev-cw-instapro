@@ -38,7 +38,7 @@ export function renderPostsPageComponent({ appEl }) {
               ${item.description}
             </p>
             <p class="post-date">
-              ${dataFormat(new Date(item.createdAt))}
+              ${dataFormat(item.createdAt)}
             </p>
           </li>`          
   }).join();
