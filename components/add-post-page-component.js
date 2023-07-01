@@ -1,6 +1,6 @@
 import { renderUploadImageComponent } from "./upload-image-component.js";
 import { renderHeaderComponent } from "./header-component.js";
-
+import { protectionHtml } from "../helpers.js";
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   let imageUrl = "";
@@ -71,7 +71,7 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
       }
 
       onAddPostClick({
-        description: textDescription,
+        description: protectionHtml(textDescription),
         imageUrl: imageUrl
       });
     });
