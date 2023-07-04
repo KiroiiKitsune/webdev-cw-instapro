@@ -1,6 +1,6 @@
 // Замени на свой, чтобы получить независимый от других набор данных.
 // "боевая" версия инстапро лежит в ключе prod
-const personalKey = "prod";
+const personalKey = "Nice";
 const baseHost = "https://webdev-hw-api.vercel.app";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
@@ -22,6 +22,47 @@ export function getPosts({ token }) {
       return data.posts;
     });
 }
+
+export function sendPosts({description, imageUrl, token }) {
+  return fetch(postsHost, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+    body: JSON.stringify({
+      description,
+      imageUrl
+    })
+  })
+    .then((response) => {
+      if (response.status === 400) {
+        throw new Error("Неверный формат данных");
+      }
+
+      return response.json();
+    })
+}
+
+
+export function userPosts({token, userId}) {
+  return fetch(postsHost + "/user-posts/" + userId,{
+    method: "GET",
+    headers: {
+      Authorization: token,
+    }
+  })
+  .then((response) => {
+    if (response.status === 401) {
+      throw new Error("Нет авторизации");
+    }
+
+    return response.json();
+  })
+  .then((data) => {
+    return data.posts;
+  })
+}
+
 
 // https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
 export function registerUser({ login, password, name, imageUrl }) {
@@ -68,3 +109,23 @@ export function uploadImage({ file }) {
     return response.json();
   });
 }
+
+export function activeUserLike ({likeId, token, activeLike }) {
+  return fetch((!activeLike ? postsHost + '/' + likeId + '/like' : postsHost + '/' + likeId + '/dislike'), {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) => {
+    if (response.status === 401) {
+      throw new Error("Нет авторизации");
+    }
+
+    return response.json();
+  })
+  .then((data) => {
+    return data.post;
+  });
+}
+

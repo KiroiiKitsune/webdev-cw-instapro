@@ -1,7 +1,7 @@
 import { loginUser, registerUser } from "../api.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
-
+import { protectionHtml } from "../helpers.js";
 export function renderAuthPageComponent({ appEl, setUser }) {
   let isLoginMode = true;
   let imageUrl = "";
@@ -93,7 +93,7 @@ export function renderAuthPageComponent({ appEl, setUser }) {
         }
 
         loginUser({
-          login: login,
+          login: protectionHtml(login),
           password: password,
         })
           .then((user) => {
@@ -127,9 +127,9 @@ export function renderAuthPageComponent({ appEl, setUser }) {
         }
 
         registerUser({
-          login: login,
+          login: protectionHtml(login),
           password: password,
-          name: name,
+          name: protectionHtml(name),
           imageUrl,
         })
           .then((user) => {
